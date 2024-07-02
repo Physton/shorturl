@@ -48,7 +48,7 @@
             </div> -->
 
             <div class="input-group mb-3">
-                <input type="text" id="urlTextInput" class="form-control" value="https://oss-img.physton.com/2024/07/01/6682c3e34a386.jpg"
+                <input type="text" id="urlTextInput" class="form-control"
                        placeholder="<?php echo __('Enter URL link') ?>">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" id="generate"
