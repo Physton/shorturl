@@ -71,7 +71,17 @@ try {
             $su = new \Libs\ShortURL();
 
             $response = $su->urlToShort($url, $encrypt_type, $extent ?? []);
-            $response = json(__('Link created successfully'), 200, $response);
+
+            require_once __DIR__ . '/libs/QRcode.php';
+            $tmp_file = sys_get_temp_dir() . '/' . uniqid() . '.png';
+            QRcode::png('http://url.phy.ps/s/CzTo2', $tmp_file, QR_ECLEVEL_L, 10, 1);
+            $qrcode = base64_encode(file_get_contents($tmp_file));
+            @unlink($tmp_file);
+
+            $response = json(__('Link created successfully'), 200, [
+                'url' => $response,
+                'qrcode' => $qrcode,
+            ]);
         }
         echo $response;
     });

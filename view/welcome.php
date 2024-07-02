@@ -48,7 +48,7 @@
             </div> -->
 
             <div class="input-group mb-3">
-                <input type="text" id="urlTextInput" class="form-control"
+                <input type="text" id="urlTextInput" class="form-control" value="https://oss-img.physton.com/2024/07/01/6682c3e34a386.jpg"
                        placeholder="<?php echo __('Enter URL link') ?>">
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" id="generate"
@@ -59,7 +59,7 @@
                 <h5><?php echo __('Firewall')?></h5>
                 <div class="custom-control custom-checkbox custom-control-inline">
                     <input type="checkbox" id="radio-ban-china_browser" name="encrypt_type" class="custom-control-input"
-                           value="ban_china_browser" checked="">
+                           value="ban_china_browser">
                     <label class="custom-control-label" for="radio-ban-china_browser"><?php echo __('Ban China Browser') ?></label>
                 </div>
                 <div class="custom-control custom-checkbox custom-control-inline">
@@ -171,8 +171,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p id="copy-text"><input type="text" name="" id="" value="https://www.baidu.com"
-                                                     readonly="readonly"/></p>
+                            <p id="copy-text"><input class="form-control" type="text" name="" id="" value="https://www.baidu.com" readonly="readonly"/></p>
+                            <img id="result-qrcode" class="img-fluid img-thumbnail rounded mx-auto d-block" />
                             <p id="copy-result"></p>
                         </div>
                         <div class="modal-footer">
@@ -308,9 +308,11 @@
             success: function (result) {
                 if (result.code === 200) {
                     // convert to https if need
-                    let shortURL = new URL(result.data)
+                    let shortURL = new URL(result.data.url)
                     shortURL.protocol = window.location.protocol
                     $('#copy-text input').val(shortURL);
+                    let qrcode = result.data.qrcode
+                    $('#result-qrcode').attr('src', 'data:image/png;base64,' + qrcode)
                     message(result.msg, 'success');
                     $('.modal').modal('show');
                 } else {
