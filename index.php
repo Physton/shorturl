@@ -29,6 +29,7 @@ define('ENCRYPT_PASSPHRASE', env('ENCRYPT_PASSPHRASE', 'applicationPassword'));
 try {
     ob_start();
     route('/', function () {
+        require_once __DIR__ . '/auth.php';
         view('welcome', ['time' => date('Ymd')]);
     });
 
@@ -55,6 +56,7 @@ try {
     });
 
     route('/api/link', function ($matches) {
+        require_once __DIR__ . '/auth.php';
         $url = $_REQUEST['url'] ?? '';
         $encrypt_type = $_REQUEST['encrypt_type'] ?? '["normal"]';
         $extent = $_REQUEST['extent'] ?? '[]';
@@ -86,6 +88,7 @@ try {
         echo $response;
     });
     route('/api/clean', function () {
+        require_once __DIR__ . '/auth.php';
         $count = \Libs\Cache\CacheManager::clearCache(null);
         echo json(sprintf('clean %s files', $count), 200);
     });
